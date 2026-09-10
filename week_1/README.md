@@ -26,3 +26,7 @@ The program takes student details and marks for multiple subjects as user input.
 - Dictionaries
 - Conditional statements
 - Exception handling
+
+ ## Sample Output
+
+ <img width="1206" height="630" alt="image" src="https://github.com/user-attachments/assets/84755aae-c7a2-4544-971e-2f9e0868005d" />
