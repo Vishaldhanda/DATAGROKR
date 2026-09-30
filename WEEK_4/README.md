@@ -220,7 +220,3 @@ This project demonstrates practical knowledge of:
 
 ---
 
-## Author
-
-**Vishal Dhanda**
-**DataGrokr Pre-Learning Program – Week 4**
