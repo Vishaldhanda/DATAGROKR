@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS dimensional_reporting_db;
+USE dimensional_reporting_db;
+CREATE TABLE dim_customer (customer_id INT PRIMARY KEY, customer_name VARCHAR(100) NOT NULL, gender VARCHAR(20), customer_segment VARCHAR(50));
+CREATE TABLE dim_product (product_id INT PRIMARY KEY, product_name VARCHAR(100) NOT NULL, category VARCHAR(50) NOT NULL, brand VARCHAR(50), price DECIMAL(10,2) NOT NULL CHECK (price >= 0));
+CREATE TABLE dim_date (date_id INT PRIMARY KEY, full_date DATE NOT NULL, day_num INT, month_num INT, month_name VARCHAR(20), quarter_num INT, year_num INT);
+CREATE TABLE dim_location (location_id INT PRIMARY KEY, city VARCHAR(50), state VARCHAR(50), region VARCHAR(50));
+CREATE TABLE fact_sales (sale_id INT PRIMARY KEY AUTO_INCREMENT, date_id INT NOT NULL, customer_id INT NOT NULL, product_id INT NOT NULL, location_id INT NOT NULL, quantity INT NOT NULL CHECK (quantity > 0), unit_price DECIMAL(10,2) NOT NULL CHECK (unit_price >= 0), discount DECIMAL(5,2) DEFAULT 0 CHECK (discount BETWEEN 0 AND 100), revenue DECIMAL(12,2) NOT NULL, FOREIGN KEY (date_id) REFERENCES dim_date(date_id), FOREIGN KEY (customer_id) REFERENCES dim_customer(customer_id), FOREIGN KEY (product_id) REFERENCES dim_product(product_id), FOREIGN KEY (location_id) REFERENCES dim_location(location_id));
+CREATE INDEX idx_sales_date ON fact_sales(date_id);
+CREATE INDEX idx_sales_customer ON fact_sales(customer_id);
+CREATE INDEX idx_sales_product ON fact_sales(product_id);
+CREATE INDEX idx_sales_location ON fact_sales(location_id);
