@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Enforces conventional commit messages: feat|fix|chore|docs|test|refactor|ci: message
+msg=$(head -n1 "$1")
+if echo "$msg" | grep -Eq '^(feat|fix|chore|docs|test|refactor|ci)(\([a-z0-9_-]+\))?: .+' \
+   || echo "$msg" | grep -Eq '^(Merge|Release|Hotfix|Revert) '; then
+  exit 0
+fi
+echo "✖ Bad commit message: '$msg'"
+echo "  Use: feat|fix|chore|docs|test|refactor|ci(scope): description"
+exit 1

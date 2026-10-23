@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Pre-commit hook: blocks commits to main/develop, runs lint + tests.
+set -e
+
+branch=$(git symbolic-ref --short HEAD)
+if [[ "$branch" == "main" || "$branch" == "develop" ]] && [[ -z "$GITFLOW_ALLOW_PROTECTED" ]]; then
+  echo "✖ Direct commits to '$branch' are blocked. Use a feature/*, release/* or hotfix/* branch."
+  exit 1
+fi
+
+echo "▶ flake8..."
+python3 -m flake8 src tests --max-line-length=100
+
+echo "▶ pytest..."
+python3 -m pytest -q
+
+echo "✔ pre-commit checks passed"
